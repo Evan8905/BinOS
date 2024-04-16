@@ -5,6 +5,7 @@
 package Presentation;
 
 import Data.Conection;
+import Data.Utilidades;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
@@ -20,6 +21,11 @@ public class LoginScreen extends javax.swing.JFrame {
      */
     public LoginScreen() {
         initComponents();
+        // Cerrar todas las demás ventanas
+        Utilidades.cerrarTodasLasVentanas();
+
+        // Agregar esta ventana a la lista de ventanas abiertas
+        Utilidades.abrirNuevaVentana(this);
     }
 
     /**
@@ -243,7 +249,7 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUserNameKeyPressed
 
     private void btnEyeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEyeMousePressed
-       
+
         char[] passwordChars = txtPassword.getPassword();
         String password = new String(passwordChars);
         txtPassword.setEchoChar((char) 0);

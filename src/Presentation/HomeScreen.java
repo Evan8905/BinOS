@@ -4,6 +4,8 @@
  */
 package Presentation;
 
+import Data.Utilidades;
+
 /**
  *
  * @author eefre
@@ -15,6 +17,11 @@ public class HomeScreen extends javax.swing.JFrame {
      */
     public HomeScreen() {
         initComponents();
+        // Cerrar todas las demás ventanas
+        Utilidades.cerrarTodasLasVentanas();
+
+        // Agregar esta ventana a la lista de ventanas abiertas
+        Utilidades.abrirNuevaVentana(this);
     }
 
     /**
@@ -27,22 +34,80 @@ public class HomeScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
+        lblSignOut = new javax.swing.JLabel();
+        btnReports = new javax.swing.JButton();
+        btnReports1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Bienvenido");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 290, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, -1, -1));
+
+        lblSignOut.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
+        lblSignOut.setForeground(new java.awt.Color(255, 255, 255));
+        lblSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/signOutWhite.png"))); // NOI18N
+        lblSignOut.setText("Cerrar Sesión");
+        lblSignOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSignOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSignOutMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblSignOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 20, -1, -1));
+
+        btnReports.setBackground(new java.awt.Color(16, 16, 16));
+        btnReports.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnReports.setForeground(new java.awt.Color(153, 153, 255));
+        btnReports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adminIcon.png"))); // NOI18N
+        btnReports.setText("     Admin");
+        btnReports.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportsActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnReports, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 290, 280, 190));
+
+        btnReports1.setBackground(new java.awt.Color(16, 16, 16));
+        btnReports1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnReports1.setForeground(new java.awt.Color(153, 0, 51));
+        btnReports1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reports.png"))); // NOI18N
+        btnReports1.setText("     Reportes");
+        btnReports1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReports1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReports1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnReports1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 280, 190));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBG.png"))); // NOI18N
         jLabel1.setText("lblBG");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1460, 763));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1460, 763));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lblSignOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignOutMouseClicked
+        LoginScreen scr = new LoginScreen();
+        scr.setLocationRelativeTo(null);
+        scr.setVisible(true);
+    }//GEN-LAST:event_lblSignOutMouseClicked
+
+    private void btnReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportsActionPerformed
+        AdminScreen scr = new AdminScreen();
+        scr.setLocationRelativeTo(null);
+        scr.setVisible(true);
+    }//GEN-LAST:event_btnReportsActionPerformed
+
+    private void btnReports1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReports1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReports1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,7 +145,10 @@ public class HomeScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnReports;
+    private javax.swing.JButton btnReports1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblSignOut;
     // End of variables declaration//GEN-END:variables
 }
