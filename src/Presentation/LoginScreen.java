@@ -44,6 +44,7 @@ public class LoginScreen extends javax.swing.JFrame {
         lblExit = new javax.swing.JLabel();
         sideBG = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
+        btnEye = new javax.swing.JLabel();
         blackBG = new javax.swing.JLabel();
 
         pinaBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/frutaPiña 1.png"))); // NOI18N
@@ -106,7 +107,7 @@ public class LoginScreen extends javax.swing.JFrame {
                 txtPasswordKeyPressed(evt);
             }
         });
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, 220, -1));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, 190, -1));
 
         btnLogin.setBackground(new java.awt.Color(0, 142, 73));
         btnLogin.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
@@ -159,6 +160,18 @@ public class LoginScreen extends javax.swing.JFrame {
         jSeparator2.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 220, -1));
+
+        btnEye.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/eyePasswordWhite.png"))); // NOI18N
+        btnEye.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEye.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEyeMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEyeMouseReleased(evt);
+            }
+        });
+        getContentPane().add(btnEye, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, 30, -1));
 
         blackBG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBG.png"))); // NOI18N
         blackBG.setText("lblBG");
@@ -228,6 +241,18 @@ public class LoginScreen extends javax.swing.JFrame {
             txtPassword.setText("");
         }
     }//GEN-LAST:event_txtUserNameKeyPressed
+
+    private void btnEyeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEyeMousePressed
+       
+        char[] passwordChars = txtPassword.getPassword();
+        String password = new String(passwordChars);
+        txtPassword.setEchoChar((char) 0);
+        txtPassword.setText(password);
+    }//GEN-LAST:event_btnEyeMousePressed
+
+    private void btnEyeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEyeMouseReleased
+        txtPassword.setEchoChar('*');
+    }//GEN-LAST:event_btnEyeMouseReleased
     private void validateLogin() {
 
         // Obtener los datos del formulario
@@ -284,6 +309,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel blackBG;
+    private javax.swing.JLabel btnEye;
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
