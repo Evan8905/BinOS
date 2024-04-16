@@ -51,13 +51,14 @@ public class AdminScreen extends javax.swing.JFrame {
         bodyPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 51));
         setName("mainJframe"); // NOI18N
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelMain.setBackground(new java.awt.Color(0, 102, 102));
-        panelMain.setForeground(new java.awt.Color(0, 204, 51));
+        panelMain.setBackground(new java.awt.Color(255, 255, 0));
+        panelMain.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
         panelMain.setLayout(panelMainLayout);
@@ -237,28 +238,29 @@ public class AdminScreen extends javax.swing.JFrame {
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addContainerGap(427, Short.MAX_VALUE)
-                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(478, 478, 478))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
-                        .addComponent(lblSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))))
+                .addContainerGap(424, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(343, 343, 343)
+                .addComponent(lblSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        getContentPane().add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, -1, 120));
+        getContentPane().add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, -1, 80));
 
-        bodyPanel.setBackground(new java.awt.Color(204, 204, 255));
+        bodyPanel.setBackground(new java.awt.Color(16, 23, 27));
+        bodyPanel.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
@@ -268,10 +270,10 @@ public class AdminScreen extends javax.swing.JFrame {
         );
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
+            .addGap(0, 690, Short.MAX_VALUE)
         );
 
-        getContentPane().add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 1130, 660));
+        getContentPane().add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 1130, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

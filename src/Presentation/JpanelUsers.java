@@ -26,17 +26,181 @@ public class JpanelUsers extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupType = new javax.swing.ButtonGroup();
+        buttonGroupEstado = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        txtUserName = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        rbtnAdmin = new javax.swing.JRadioButton();
+        rbtnDigitador = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
+        rbtnActive = new javax.swing.JRadioButton();
+        rbtnInactive = new javax.swing.JRadioButton();
+        btnDelete = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnRead = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txtSearchById = new javax.swing.JTextField();
+        jSeparator5 = new javax.swing.JSeparator();
 
+        setBackground(new java.awt.Color(16, 23, 27));
         setPreferredSize(new java.awt.Dimension(1130, 660));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("CRUD USERS");
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(244, 67, 54));
+        jLabel1.setText("Usuarios");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 142, 73));
+        jLabel2.setText("ID");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 30, -1));
+
+        txtID.setBackground(new java.awt.Color(16, 23, 27));
+        txtID.setForeground(new java.awt.Color(204, 204, 204));
+        txtID.setBorder(null);
+        add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 280, 20));
+
+        jSeparator1.setBackground(new java.awt.Color(204, 204, 204));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 280, 10));
+
+        jLabel3.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 142, 73));
+        jLabel3.setText("Nombre");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 110, -1));
+
+        txtName.setBackground(new java.awt.Color(16, 23, 27));
+        txtName.setForeground(new java.awt.Color(204, 204, 204));
+        txtName.setBorder(null);
+        add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 280, 20));
+
+        jSeparator2.setBackground(new java.awt.Color(204, 204, 204));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 280, 10));
+
+        jLabel4.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 142, 73));
+        jLabel4.setText("Nombre de Usuario");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 150, -1));
+
+        txtUserName.setBackground(new java.awt.Color(16, 23, 27));
+        txtUserName.setForeground(new java.awt.Color(204, 204, 204));
+        txtUserName.setBorder(null);
+        add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 280, 20));
+
+        jSeparator3.setBackground(new java.awt.Color(204, 204, 204));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 280, 10));
+
+        jLabel5.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 142, 73));
+        jLabel5.setText("Contraseña");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 110, -1));
+
+        txtPassword.setBackground(new java.awt.Color(16, 23, 27));
+        txtPassword.setForeground(new java.awt.Color(204, 204, 204));
+        txtPassword.setBorder(null);
+        add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 280, 20));
+
+        jSeparator4.setBackground(new java.awt.Color(204, 204, 204));
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 280, 10));
+
+        jLabel6.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 142, 73));
+        jLabel6.setText("Tipo");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 360, 50, -1));
+
+        buttonGroupType.add(rbtnAdmin);
+        rbtnAdmin.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        rbtnAdmin.setText("Administrador");
+        add(rbtnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, -1, -1));
+
+        buttonGroupType.add(rbtnDigitador);
+        rbtnDigitador.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        rbtnDigitador.setText("Digitador");
+        add(rbtnDigitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 360, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 142, 73));
+        jLabel7.setText("Estado");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 50, -1));
+
+        buttonGroupEstado.add(rbtnActive);
+        rbtnActive.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        rbtnActive.setText("Activo");
+        add(rbtnActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, -1));
+
+        buttonGroupEstado.add(rbtnInactive);
+        rbtnInactive.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        rbtnInactive.setText("Inactivo");
+        add(rbtnInactive, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, -1, -1));
+
+        btnDelete.setText("Eliminar");
+        add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 460, -1, -1));
+
+        btnSave.setText("Guardar");
+        add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, -1, -1));
+
+        btnRead.setText("Consultar");
+        add(btnRead, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 180, -1, -1));
+
+        btnUpdate.setText("Actualizar");
+        add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 142, 73));
+        jLabel8.setText("Consultar Registro por ID");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, 180, -1));
+
+        txtSearchById.setBackground(new java.awt.Color(16, 23, 27));
+        txtSearchById.setForeground(new java.awt.Color(204, 204, 204));
+        txtSearchById.setBorder(null);
+        add(txtSearchById, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
+
+        jSeparator5.setBackground(new java.awt.Color(204, 204, 204));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 280, 10));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnRead;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroupEstado;
+    private javax.swing.ButtonGroup buttonGroupType;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JRadioButton rbtnActive;
+    private javax.swing.JRadioButton rbtnAdmin;
+    private javax.swing.JRadioButton rbtnDigitador;
+    private javax.swing.JRadioButton rbtnInactive;
+    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtSearchById;
+    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

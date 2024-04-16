@@ -71,7 +71,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 btnReportsActionPerformed(evt);
             }
         });
-        getContentPane().add(btnReports, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 290, 280, 190));
+        getContentPane().add(btnReports, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 280, 190));
 
         btnReports1.setBackground(new java.awt.Color(16, 16, 16));
         btnReports1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
