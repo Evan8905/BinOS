@@ -7,6 +7,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import Presentation.JpanelUsers;
 
 public class Conection {
 
@@ -39,7 +40,7 @@ public class Conection {
     }
 
     private static boolean databaseExists(Connection connection, String DB_NAME) throws SQLException {
-        // Verificar si la base de datos ya existe consultando el catálogo de bases de datos del servidor
+        // Verificar si la base de datos ya existe 
         String checkDatabaseQuery = "SELECT name FROM sys.databases WHERE name = '" + DB_NAME + "'";
         try (Statement stmt = connection.createStatement(); var resultSet = stmt.executeQuery(checkDatabaseQuery)) {
             return resultSet.next();
@@ -53,30 +54,6 @@ public class Conection {
         return DriverManager.getConnection(URL);
     }
 
-//    public static Connection getConection() throws SQLException {
-//        return DriverManager.getConnection(URL);
-//    }
-//    public static void createTables() {
-//        String createTableQuery = "CREATE TABLE Users ("
-//                + "id INT PRIMARY KEY IDENTITY,"
-//                + "username VARCHAR(50) UNIQUE NOT NULL,"
-//                + "password VARCHAR(50) NOT NULL"
-//                + ")";
-//
-//        try (Connection con = getConection(); Statement stmt = con.createStatement()) {
-//
-//            // Verificar si la tabla ya existe
-//            if (!tableExists("Users", stmt)) {
-//                stmt.executeUpdate(createTableQuery);
-//                JOptionPane.showMessageDialog(null, "Tabla de usuarios creada exitosamente.");
-//            } else {
-//                JOptionPane.showMessageDialog(null, "La tabla de usuarios ya existe.");
-//            }
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al crear la tabla de usuarios: " + e.getMessage());
-//        }
-//    }
     public static void createTables() {
         try (Connection con = getConection(); Statement stmt = con.createStatement()) {
 
@@ -85,8 +62,12 @@ public class Conection {
                 // Si no existe, crearla
                 String createUsersTableQuery = "CREATE TABLE Users ("
                         + "id INT PRIMARY KEY IDENTITY,"
+                        + "idUser VARCHAR(50) NOT NULL,"
+                        + "name VARCHAR(50) NOT NULL,"
                         + "username VARCHAR(50) UNIQUE NOT NULL,"
-                        + "password VARCHAR(50) NOT NULL"
+                        + "password VARCHAR(50) NOT NULL,"
+                        + "type BIT NOT NULL," // BIT para tipo booleano
+                        + "state BIT NOT NULL" // BIT para tipo booleano
                         + ")";
                 stmt.executeUpdate(createUsersTableQuery);
                 System.out.println("Tabla de usuarios creada exitosamente.");
@@ -120,22 +101,31 @@ public class Conection {
     }
 
     public static void insertUsers() {
-        // here we are inserting users to the DB
+        //insertando usuarios en la base de datos
         String[][] usuarios = {
-            {"usuario1", "contraseña1"},
-            {"usuario2", "contraseña2"},
-            {"usuario3", "contraseña3"},
-            {"admin", "admin"}
-
+            {"usuario1", "contraseña1", "123456789", "Nombre1", "true", "true"},
+            {"usuario2", "contraseña2", "987654321", "Nombre2", "false", "true"},
+            {"usuario3", "contraseña3", "456789123", "Nombre3", "true", "false"},
+            {"admin", "admin", "654321987", "Evan", "true", "true"}
         };
 
-        try (Connection con = getConection(); Statement stmt = con.createStatement()) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Users (idUser, name, username, password, type, state) VALUES (?, ?, ?, ?, ?, ?)")) {
 
             for (String[] usuario : usuarios) {
                 String username = usuario[0];
                 String password = usuario[1];
-                String insertQuery = "INSERT INTO Users (username, password) VALUES ('" + username + "', '" + password + "')";
-                stmt.executeUpdate(insertQuery);
+                String idUser = usuario[2];
+                String name = usuario[3];
+                boolean type = Boolean.parseBoolean(usuario[4]);
+                boolean state = Boolean.parseBoolean(usuario[5]);
+
+                pstmt.setString(1, idUser);
+                pstmt.setString(2, name);
+                pstmt.setString(3, username);
+                pstmt.setString(4, password);
+                pstmt.setBoolean(5, type);
+                pstmt.setBoolean(6, state);
+                pstmt.executeUpdate();
             }
 
             JOptionPane.showMessageDialog(null, "Usuarios cargados exitosamente.");
@@ -145,26 +135,76 @@ public class Conection {
         }
     }
 
-    public static void consultarUsuarios() {
-        String selectQuery = "SELECT * FROM Users";
+    public static void insertUserUI(User user) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Users (idUser, name, username, password, type, state) VALUES (?, ?, ?, ?, ?, ?)")) {
+            pstmt.setString(1, user.getIdUser());
+            pstmt.setString(2, user.getName());
+            pstmt.setString(3, user.getUserName());
+            pstmt.setString(4, user.getPassword());
+            pstmt.setBoolean(5, user.isType());
+            pstmt.setBoolean(6, user.isStatus());
+            pstmt.executeUpdate();
 
-        try (Connection con = getConection(); Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(selectQuery)) {
-
-            // Iterar sobre el conjunto de resultados y mostrar la información de cada usuario
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-
-                System.out.println("ID: " + id + ", Username: " + username + ", Password: " + password);
-            }
-
+            JOptionPane.showMessageDialog(null, "Usuario agregado exitosamente.");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al consultar usuarios: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al agregar usuario: " + e.getMessage());
         }
-
     }
 
+    public static void updateUser(String idUser, String name, String username, String password, boolean type, boolean state) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("UPDATE Users SET name = ?, username = ?, password = ?, type = ?, state = ? WHERE idUser = ?")) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, username);
+            pstmt.setString(3, password);
+            pstmt.setBoolean(4, type);
+            pstmt.setBoolean(5, state);
+            pstmt.setString(6, idUser);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Usuario actualizado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar usuario: " + e.getMessage());
+        }
+    }
+
+    //El metodo de read esta en la interfaz directamente.
+    public static void deleteUser(String idUser) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("DELETE FROM Users WHERE idUser = ?")) {
+            pstmt.setString(1, idUser);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Usuario eliminado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar usuario: " + e.getMessage());
+        }
+    }
+
+//    public static void consultarUsuarios() {
+//        String selectQuery = "SELECT * FROM Users";
+//
+//        try (Connection con = getConection(); Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(selectQuery)) {
+//
+//            // Iterar sobre el conjunto de resultados y mostrar la información de cada usuario
+//            while (rs.next()) {
+//                int id = rs.getInt("id");
+//                String username = rs.getString("username");
+//                String password = rs.getString("password");
+//
+//                System.out.println("ID: " + id + ", Username: " + username + ", Password: " + password);
+//            }
+//
+//        } catch (SQLException e) {
+//            JOptionPane.showMessageDialog(null, "Error al consultar usuarios: " + e.getMessage());
+//        }
+//
+//    }
     public static boolean checkUser(String username, String password) {
         String selectQuery = "SELECT * FROM Users WHERE username = ? AND password = ?";
 
@@ -183,7 +223,7 @@ public class Conection {
     }
 
     public static void main(String[] args) {
-        Conection.createDB();
+        //Conection.createDB();
         createTables();
         insertUsers();
     }

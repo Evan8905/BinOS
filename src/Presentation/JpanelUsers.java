@@ -1,8 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package Presentation;
+
+import Data.Conection;
+import static Data.Conection.getConection;
+import Data.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +20,70 @@ public class JpanelUsers extends javax.swing.JPanel {
      */
     public JpanelUsers() {
         initComponents();
+    }
+
+    public void createNewUser() {
+
+        String idUser = txtID.getText();
+        String name = txtName.getText();
+        String userName = txtUserName.getText();
+        String password = txtPassword.getText();
+        boolean typeSelected = rbtnAdmin.isSelected();
+        boolean statusSelected = rbtnActive.isSelected();
+
+        User user = new User(idUser, name, userName, password, typeSelected, statusSelected);
+        Conection.insertUserUI(user);
+        cleanUpForm();
+    }
+
+    public void cleanUpForm() {
+        // Limpiar campos de texto
+        txtID.setText("");
+        txtName.setText("");
+        txtUserName.setText("");
+        txtPassword.setText("");
+        txtSearchByIdUser.setText("");
+
+        // Limpiar botones de radio
+        buttonGroupType.clearSelection();
+        buttonGroupEstado.clearSelection();
+    }
+
+    public void showUserDetails(String idUser) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Users WHERE idUser = ?")) {
+            pstmt.setString(1, idUser);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Obtener detalles del usuario desde el ResultSet
+                String name = rs.getString("name");
+                String userName = rs.getString("username");
+                String password = rs.getString("password");
+                boolean type = rs.getBoolean("type");
+                boolean status = rs.getBoolean("state");
+
+                // Establecer detalles del usuario en los campos de la interfaz
+                txtID.setText(idUser);
+                txtName.setText(name);
+                txtUserName.setText(userName);
+                txtPassword.setText(password);
+                if (type) {
+                    rbtnAdmin.setSelected(true);
+                } else {
+                    rbtnDigitador.setSelected(true);
+                }
+                if (status) {
+                    rbtnActive.setSelected(true);
+                } else {
+                    rbtnInactive.setSelected(true);
+                }
+            } else {
+                // No se encontró ningún usuario con el idUser especificado
+                JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar usuario: " + e.getMessage());
+        }
     }
 
     /**
@@ -52,7 +121,7 @@ public class JpanelUsers extends javax.swing.JPanel {
         btnRead = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        txtSearchById = new javax.swing.JTextField();
+        txtSearchByIdUser = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(16, 23, 27));
@@ -147,15 +216,35 @@ public class JpanelUsers extends javax.swing.JPanel {
         add(rbtnInactive, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 390, -1, -1));
 
         btnDelete.setText("Eliminar");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 460, -1, -1));
 
         btnSave.setText("Guardar");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, -1, -1));
 
         btnRead.setText("Consultar");
+        btnRead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReadActionPerformed(evt);
+            }
+        });
         add(btnRead, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 180, -1, -1));
 
         btnUpdate.setText("Actualizar");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
         add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
@@ -163,14 +252,43 @@ public class JpanelUsers extends javax.swing.JPanel {
         jLabel8.setText("Consultar Registro por ID");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, 180, -1));
 
-        txtSearchById.setBackground(new java.awt.Color(16, 23, 27));
-        txtSearchById.setForeground(new java.awt.Color(204, 204, 204));
-        txtSearchById.setBorder(null);
-        add(txtSearchById, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
+        txtSearchByIdUser.setBackground(new java.awt.Color(16, 23, 27));
+        txtSearchByIdUser.setForeground(new java.awt.Color(204, 204, 204));
+        txtSearchByIdUser.setBorder(null);
+        add(txtSearchByIdUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
 
         jSeparator5.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 280, 10));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        createNewUser();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadActionPerformed
+        String idUser = txtSearchByIdUser.getText();
+        showUserDetails(idUser);
+        btnSave.setEnabled(false); // Deshabilitar el botón btnSave par aque no pueda hacer otro registro igual la base de datos no se lo va permitir
+    }//GEN-LAST:event_btnReadActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String idUser = txtSearchByIdUser.getText();
+        Conection.deleteUser(idUser);
+        cleanUpForm();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        String idUser = txtID.getText();
+        String name = txtName.getText();
+        String username = txtUserName.getText(); 
+        String password = txtPassword.getText(); 
+        boolean type = rbtnAdmin.isSelected(); 
+        boolean state = rbtnActive.isSelected();
+
+        Conection conection = new Conection(); 
+        conection.updateUser(idUser, name, username, password, type, state);
+        cleanUpForm();
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -200,7 +318,7 @@ public class JpanelUsers extends javax.swing.JPanel {
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtSearchById;
+    private javax.swing.JTextField txtSearchByIdUser;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
