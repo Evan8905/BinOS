@@ -1,5 +1,14 @@
-
 package Presentation;
+
+import Data.Conection;
+import static Data.Conection.getConection;
+import Data.FarmField;
+import Data.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,6 +21,56 @@ public class JpanelFarmFields extends javax.swing.JPanel {
      */
     public JpanelFarmFields() {
         initComponents();
+    }
+
+    public void createNewField() {
+
+        String idField = txtID.getText();
+        String number = txtNumberField.getText();
+        int numberFarm = Integer.parseInt(number);
+        String size = txtSizeField.getText();
+        String farmId = txtFarmId.getText(); // esta es una llave foranea con el id de la finca
+
+        FarmField field = new FarmField(idField, numberFarm, size, farmId);
+        Conection.insertFields(field);
+        cleanUpForm();
+    }
+
+    public void cleanUpForm() {
+        // Limpiar campos de texto
+        txtID.setText("");
+        txtNumberField.setText("");
+        txtSizeField.setText("");
+        txtFarmId.setText("");
+        txtSearchByIdField.setText("");
+
+    }
+
+    public void showFieldDetails(String idField) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("SELECT * FROM FarmFields WHERE id_Field = ?")) {
+            pstmt.setString(1, idField);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Obtener detalles del usuario desde el ResultSet
+                String number = rs.getString("number");
+                String size = rs.getString("size_Field");
+                String farm = rs.getString("farm");
+    
+
+                // Establecer detalles del Lote en los campos de la interfaz
+                txtID.setText(idField);
+                txtNumberField.setText(number);
+                txtSizeField.setText(size);
+                txtFarmId.setText(farm);
+
+            } else {
+                // No se encontró ningún usuario con el idUser especificado
+                JOptionPane.showMessageDialog(null, "No se encontró ningún Lote con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar Lote: " + e.getMessage());
+        }
     }
 
     /**
@@ -34,7 +93,7 @@ public class JpanelFarmFields extends javax.swing.JPanel {
         txtSizeField = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        txtFarmField = new javax.swing.JTextField();
+        txtFarmId = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         btnRead = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -93,13 +152,13 @@ public class JpanelFarmFields extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 142, 73));
-        jLabel5.setText("Nombre de la finca");
+        jLabel5.setText("ID de la finca");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 180, -1));
 
-        txtFarmField.setBackground(new java.awt.Color(16, 23, 27));
-        txtFarmField.setForeground(new java.awt.Color(204, 204, 204));
-        txtFarmField.setBorder(null);
-        add(txtFarmField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 280, 20));
+        txtFarmId.setBackground(new java.awt.Color(16, 23, 27));
+        txtFarmId.setForeground(new java.awt.Color(204, 204, 204));
+        txtFarmId.setBorder(null);
+        add(txtFarmId, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 280, 20));
 
         jSeparator4.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 280, 10));
@@ -151,19 +210,31 @@ public class JpanelFarmFields extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadActionPerformed
- // Deshabilitar el botón btnSave par aque no pueda hacer otro registro igual la base de datos no se lo va permitir
-    }//GEN-LAST:event_btnReadActionPerformed
+        String idField = txtSearchByIdField.getText();
+        showFieldDetails(idField);
+        btnSave.setEnabled(false);    }//GEN-LAST:event_btnReadActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       
+        createNewField();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        String idField = txtID.getText();
+        String number = txtNumberField.getText();
+        int numberFarm = Integer.parseInt(number);
+        String size = txtSizeField.getText();
+        String farmId = txtFarmId.getText();
 
+        Conection conection = new Conection();
+        conection.updateField(idField, numberFarm, size, farmId);
+        cleanUpForm();
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
+        String idField = txtSearchByIdField.getText();
+        Conection.deleteField(idField);
+        cleanUpForm();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
 
@@ -183,7 +254,7 @@ public class JpanelFarmFields extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTextField txtFarmField;
+    private javax.swing.JTextField txtFarmId;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNumberField;
     private javax.swing.JTextField txtSearchByIdField;

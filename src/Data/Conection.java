@@ -89,7 +89,7 @@ public class Conection {
             if (!tableExists("Farms", stmt)) {
                 String createOtraTablaQuery = "CREATE TABLE Farms ("
                         + "id INT PRIMARY KEY IDENTITY,"
-                        + "id_Farm VARCHAR(50) NOT NULL,"
+                        + "id_Farm VARCHAR(50) UNIQUE NOT NULL,"
                         + "name VARCHAR(50) NOT NULL,"
                         + "location VARCHAR(50) NOT NULL,"
                         + "owner VARCHAR(50) NOT NULL,"
@@ -99,6 +99,20 @@ public class Conection {
                 System.out.println("Tabla Farms creada exitosamente.");
             } else {
                 System.out.println("La tabla Farms ya existe.");
+            }
+            if (!tableExists("FarmFields", stmt)) {
+                String createOtraTablaQuery = "CREATE TABLE FarmFields ("
+                        + "id INT PRIMARY KEY IDENTITY,"
+                        + "id_Field VARCHAR(50) NOT NULL,"
+                        + "number INT NOT NULL,"
+                        + "size_Field VARCHAR(50) NOT NULL,"
+                        + "farm VARCHAR(50) NOT NULL,"
+                        + "FOREIGN KEY (farm) REFERENCES Farms(id_Farm)"
+                        + ")";
+                stmt.executeUpdate(createOtraTablaQuery);
+                System.out.println("Tabla FarmFields creada exitosamente.");
+            } else {
+                System.out.println("La tabla FarmFields ya existe.");
             }
 
             // Agregar más bloques if para cada tabla adicional que desees crear
@@ -273,8 +287,8 @@ public class Conection {
             JOptionPane.showMessageDialog(null, "Error al eliminar Finca: " + e.getMessage());
         }
     }
-    
-    public static void updateFarm(String idFarm, String name, String location, String owner, String cantLotes ) {
+
+    public static void updateFarm(String idFarm, String name, String location, String owner, String cantLotes) {
         try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("UPDATE Farms SET name = ?, location = ?, owner = ?, cant_Lotes = ? WHERE id_Farm = ?")) {
             pstmt.setString(1, name);
             pstmt.setString(2, location);
@@ -290,6 +304,58 @@ public class Conection {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al actualizar Finca: " + e.getMessage());
+        }
+    }
+
+    /**
+     * ***********************************************LOTES*****************************************************************
+     *
+     *
+     * @param args
+     */
+    public static void insertFields(FarmField field) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO FarmFields (id_Field, number, size_Field, farm) VALUES (?, ?, ?, ?)")) {
+            pstmt.setString(1, field.getIdFarmField());
+            pstmt.setInt(2, field.getNumberField());
+            pstmt.setString(3, field.getFieldSize());
+            pstmt.setString(4, field.getIdFromFarm());
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Lote agregado exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar Lote: " + e.getMessage());
+        }
+    }
+
+    public static void deleteField(String idField) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("DELETE FROM FarmFields WHERE id_Field = ?")) {
+            pstmt.setString(1, idField);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Lote eliminado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningun Lote con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el lote: " + e.getMessage());
+        }
+    }
+
+    public static void updateField(String idField, int number, String size, String farm) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("UPDATE FarmFields SET farm = ?, number = ?, size_Field = ? WHERE id_Field = ?")) {
+            pstmt.setString(1, farm);
+            pstmt.setInt(2, number);
+            pstmt.setString(3, size);
+            pstmt.setString(4, idField);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Lote actualizado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningún Lote con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Lote: " + e.getMessage());
         }
     }
 
