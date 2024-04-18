@@ -284,10 +284,10 @@ public class JpanelUsers extends javax.swing.JPanel {
         String password = txtPassword.getText(); 
         boolean type = rbtnAdmin.isSelected(); 
         boolean state = rbtnActive.isSelected();
-
         Conection conection = new Conection(); 
         conection.updateUser(idUser, name, username, password, type, state);
         cleanUpForm();
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 

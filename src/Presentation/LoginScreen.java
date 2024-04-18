@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Presentation;
 
 import Data.Conection;
@@ -259,22 +255,56 @@ public class LoginScreen extends javax.swing.JFrame {
     private void btnEyeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEyeMouseReleased
         txtPassword.setEchoChar('*');
     }//GEN-LAST:event_btnEyeMouseReleased
-    private void validateLogin() {
+//    private void validateLogin() {
+//        // Obtener los datos del formulario
+//        String user = txtUserName.getText();
+//        String password = txtPassword.getText();
+//       
+//        // Verificar las credenciales del usuario
+//        if (Conection.checkUser(user, password)) {
+//            // Las credenciales son correctas, permitir el acceso al sistema
+//            JOptionPane.showMessageDialog(null, "Acceso concedido.");
+//            HomeScreenDigitador scr = new HomeScreenDigitador();
+//            scr.setLocationRelativeTo(null);
+//            scr.setVisible(true);
+//        } else {
+//            // Las credenciales son incorrectas
+//            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+//        }
+//    }
 
+    private void validateLogin() {
         // Obtener los datos del formulario
         String user = txtUserName.getText();
         String password = txtPassword.getText();
 
         // Verificar las credenciales del usuario
-        if (Conection.checkUser(user, password)) {
-            // Las credenciales son correctas, permitir el acceso al sistema
-            JOptionPane.showMessageDialog(null, "Acceso concedido.");
-            HomeScreen scr = new HomeScreen();
-            scr.setLocationRelativeTo(null);
-            scr.setVisible(true);
-        } else {
-            // Las credenciales son incorrectas
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+        int tipoUsuario = Conection.checkUser(user, password);
+        switch (tipoUsuario) {
+            case 1:
+                // El usuario es un administrador, mostrar la pantalla de HomeScreen
+                HomeScreen scr = new HomeScreen();
+                scr.setLocationRelativeTo(null);
+                scr.setVisible(true);
+                break;
+            case 0:
+                // El usuario no es un administrador, mostrar la pantalla de HomeScreenDigitador
+                HomeScreenDigitador scrDigitador = new HomeScreenDigitador();
+                scrDigitador.setLocationRelativeTo(null);
+                scrDigitador.setVisible(true);
+                break;
+            case -1:
+                // No se encontró el tipo de usuario
+                JOptionPane.showMessageDialog(null, "No se encontró el tipo de usuario.");
+                break;
+            case -2:
+                // Las credenciales son incorrectas
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+                break;
+            case -3:
+                // Hubo un error al verificar al usuario
+                JOptionPane.showMessageDialog(null, "Error al verificar usuario.");
+                break;
         }
     }
 

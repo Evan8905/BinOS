@@ -2,24 +2,22 @@ package Presentation;
 
 import Data.Utilidades;
 
-
 /**
  *
  * @author eefre
  */
-public class HomeScreen extends javax.swing.JFrame {
+public class HomeScreenDigitador extends javax.swing.JFrame {
 
     /**
-     * Creates new form HomeScreen
+     * Creates new form HomeScreenDigitador
      */
-    public HomeScreen() {
+    public HomeScreenDigitador() {
         initComponents();
         // Cerrar todas las demás ventanas
         Utilidades.cerrarTodasLasVentanas();
 
         // Agregar esta ventana a la lista de ventanas abiertas
         Utilidades.abrirNuevaVentana(this);
-
     }
 
     /**
@@ -33,12 +31,10 @@ public class HomeScreen extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         lblSignOut = new javax.swing.JLabel();
-        btnAdmin = new javax.swing.JButton();
-        btnReports1 = new javax.swing.JButton();
+        btnDigitador = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
@@ -58,35 +54,22 @@ public class HomeScreen extends javax.swing.JFrame {
         });
         getContentPane().add(lblSignOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 20, -1, -1));
 
-        btnAdmin.setBackground(new java.awt.Color(16, 16, 16));
-        btnAdmin.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnAdmin.setForeground(new java.awt.Color(153, 153, 255));
-        btnAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adminIcon.png"))); // NOI18N
-        btnAdmin.setText("     Admin");
-        btnAdmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAdmin.addActionListener(new java.awt.event.ActionListener() {
+        btnDigitador.setBackground(new java.awt.Color(16, 16, 16));
+        btnDigitador.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnDigitador.setForeground(new java.awt.Color(153, 153, 255));
+        btnDigitador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adminIcon.png"))); // NOI18N
+        btnDigitador.setText("Digitador");
+        btnDigitador.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDigitador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdminActionPerformed(evt);
+                btnDigitadorActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 280, 190));
-
-        btnReports1.setBackground(new java.awt.Color(16, 16, 16));
-        btnReports1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnReports1.setForeground(new java.awt.Color(153, 0, 51));
-        btnReports1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/reports.png"))); // NOI18N
-        btnReports1.setText("     Reportes");
-        btnReports1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnReports1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReports1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnReports1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 280, 190));
+        getContentPane().add(btnDigitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 260, 280, 190));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBG.png"))); // NOI18N
         jLabel1.setText("lblBG");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1460, 763));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1460, 763));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -97,23 +80,12 @@ public class HomeScreen extends javax.swing.JFrame {
         scr.setVisible(true);
     }//GEN-LAST:event_lblSignOutMouseClicked
 
-    private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+    private void btnDigitadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDigitadorActionPerformed
 
         AdminScreen scr = new AdminScreen();
         scr.setLocationRelativeTo(null);
         scr.setVisible(true);
-    }//GEN-LAST:event_btnAdminActionPerformed
-
-
-    private void btnReports1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReports1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnReports1ActionPerformed
-
-//    public static void userLogged(boolean isDigitador, JButton btnAdmin) {
-//        // Aquí puedes realizar las acciones necesarias dependiendo del valor de isDigitador
-//        // Por ejemplo, puedes deshabilitar un botón si isDigitador es verdadero
-//        btnAdmin.setEnabled(!isDigitador);
-//    }
+    }//GEN-LAST:event_btnDigitadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,27 +104,26 @@ public class HomeScreen extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeScreenDigitador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeScreenDigitador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeScreenDigitador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomeScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HomeScreenDigitador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomeScreen().setVisible(true);
+                new HomeScreenDigitador().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdmin;
-    private javax.swing.JButton btnReports1;
+    private javax.swing.JButton btnDigitador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblSignOut;
