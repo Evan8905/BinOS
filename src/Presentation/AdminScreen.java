@@ -3,6 +3,7 @@ package Presentation;
 import Data.Utilidades;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -40,11 +41,12 @@ public class AdminScreen extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         btnUsers = new javax.swing.JButton();
         btnProveedores = new javax.swing.JButton();
-        btnFincas = new javax.swing.JButton();
+        btnLotes = new javax.swing.JButton();
         btnCosecha = new javax.swing.JButton();
         lblCopyRight = new javax.swing.JLabel();
         btnVariedadF = new javax.swing.JButton();
         lblGoback = new javax.swing.JLabel();
+        btnFincas = new javax.swing.JButton();
         headerPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblSignOut = new javax.swing.JLabel();
@@ -117,15 +119,15 @@ public class AdminScreen extends javax.swing.JFrame {
             }
         });
 
-        btnFincas.setBackground(new java.awt.Color(0, 142, 73));
-        btnFincas.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
-        btnFincas.setForeground(new java.awt.Color(51, 51, 51));
-        btnFincas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Fincas.png"))); // NOI18N
-        btnFincas.setText("         Fincas                           ");
-        btnFincas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnFincas.addActionListener(new java.awt.event.ActionListener() {
+        btnLotes.setBackground(new java.awt.Color(0, 142, 73));
+        btnLotes.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
+        btnLotes.setForeground(new java.awt.Color(51, 51, 51));
+        btnLotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Fincas.png"))); // NOI18N
+        btnLotes.setText("         Lotes                             ");
+        btnLotes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLotes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFincasActionPerformed(evt);
+                btnLotesActionPerformed(evt);
             }
         });
 
@@ -168,6 +170,18 @@ public class AdminScreen extends javax.swing.JFrame {
             }
         });
 
+        btnFincas.setBackground(new java.awt.Color(0, 142, 73));
+        btnFincas.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
+        btnFincas.setForeground(new java.awt.Color(51, 51, 51));
+        btnFincas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Fincas.png"))); // NOI18N
+        btnFincas.setText("         Fincas                           ");
+        btnFincas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnFincas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFincasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftSidePanelLayout = new javax.swing.GroupLayout(leftSidePanel);
         leftSidePanel.setLayout(leftSidePanelLayout);
         leftSidePanelLayout.setHorizontalGroup(
@@ -181,6 +195,7 @@ public class AdminScreen extends javax.swing.JFrame {
                             .addComponent(btnProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnVariedadF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCosecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLotes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnFincas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(leftSidePanelLayout.createSequentialGroup()
                         .addGap(106, 106, 106)
@@ -198,32 +213,36 @@ public class AdminScreen extends javax.swing.JFrame {
                 .addComponent(lblLogo)
                 .addGap(43, 43, 43)
                 .addComponent(lblWelcome)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(btnUsers)
                 .addGap(18, 18, 18)
                 .addComponent(btnProveedores)
                 .addGap(18, 18, 18)
                 .addComponent(btnFincas)
                 .addGap(18, 18, 18)
+                .addComponent(btnLotes)
+                .addGap(18, 18, 18)
                 .addComponent(btnCosecha)
                 .addGap(18, 18, 18)
                 .addComponent(btnVariedadF)
-                .addGap(54, 54, 54)
+                .addGap(30, 30, 30)
                 .addComponent(lblGoback)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addComponent(lblCopyRight)
                 .addGap(30, 30, 30))
         );
 
         getContentPane().add(leftSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        headerPanel.setBackground(new java.awt.Color(117, 117, 111));
+        headerPanel.setBackground(new java.awt.Color(0, 142, 73));
         headerPanel.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Dashboard Administrativo");
 
         lblSignOut.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
+        lblSignOut.setForeground(new java.awt.Color(0, 0, 0));
         lblSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/personOut.png"))); // NOI18N
         lblSignOut.setText("Cerrar Sesión");
         lblSignOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -308,16 +327,19 @@ public class AdminScreen extends javax.swing.JFrame {
         bodyPanel.repaint();
     }//GEN-LAST:event_btnVariedadFActionPerformed
 
-    private void btnFincasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFincasActionPerformed
-        JpanelFincas panel = new JpanelFincas();
+    private void btnLotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLotesActionPerformed
+        JpanelFarmFields panel = new JpanelFarmFields();
         panel.setSize(1130, 660);
         panel.setLocation(0, 0);
         bodyPanel.removeAll();
         bodyPanel.add(panel, BorderLayout.CENTER);
         bodyPanel.revalidate();
         bodyPanel.repaint();
-    }//GEN-LAST:event_btnFincasActionPerformed
+    }//GEN-LAST:event_btnLotesActionPerformed
 
+    public void clickLotes() {
+        btnLotes.doClick();
+    }
     private void btnCosechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosechaActionPerformed
         JpanelCosecha panel = new JpanelCosecha();
         panel.setSize(1130, 660);
@@ -354,7 +376,15 @@ public class AdminScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnUsersKeyPressed
 
-
+    private void btnFincasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFincasActionPerformed
+        JpanelFincas panel = new JpanelFincas();
+        panel.setSize(1130, 660);
+        panel.setLocation(0, 0);
+        bodyPanel.removeAll();
+        bodyPanel.add(panel, BorderLayout.CENTER);
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
+    }//GEN-LAST:event_btnFincasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -395,6 +425,7 @@ public class AdminScreen extends javax.swing.JFrame {
     private javax.swing.JPanel bodyPanel;
     private javax.swing.JButton btnCosecha;
     private javax.swing.JButton btnFincas;
+    private javax.swing.JButton btnLotes;
     private javax.swing.JButton btnProveedores;
     private javax.swing.JButton btnUsers;
     private javax.swing.JButton btnVariedadF;

@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 
-
 public class Conection {
 
     private static final String DB_HOST = "localhost";
@@ -86,6 +85,20 @@ public class Conection {
                 System.out.println("Tabla Productos creada exitosamente.");
             } else {
                 System.out.println("La tabla Productos ya existe.");
+            }
+            if (!tableExists("Farms", stmt)) {
+                String createOtraTablaQuery = "CREATE TABLE Farms ("
+                        + "id INT PRIMARY KEY IDENTITY,"
+                        + "id_Farm VARCHAR(50) NOT NULL,"
+                        + "name VARCHAR(50) NOT NULL,"
+                        + "location VARCHAR(50) NOT NULL,"
+                        + "owner VARCHAR(50) NOT NULL,"
+                        + "cant_Lotes VARCHAR(50) NOT NULL"
+                        + ")";
+                stmt.executeUpdate(createOtraTablaQuery);
+                System.out.println("Tabla Farms creada exitosamente.");
+            } else {
+                System.out.println("La tabla Farms ya existe.");
             }
 
             // Agregar más bloques if para cada tabla adicional que desees crear
@@ -226,9 +239,63 @@ public class Conection {
         }
     }
 
+    /**
+     * ***********************************************Farm*****************************************************************
+     *
+     *
+     * @param args
+     */
+    public static void insertFarm(Farm farm) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Farms (id_Farm, name, location, owner, cant_Lotes) VALUES (?, ?, ?, ?, ?)")) {
+            pstmt.setString(1, farm.getIdFarm());
+            pstmt.setString(2, farm.getNameFarm());
+            pstmt.setString(3, farm.getLocation());
+            pstmt.setString(4, farm.getOwner());
+            pstmt.setString(5, farm.getFarmField());
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Finca agregado exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar Finca: " + e.getMessage());
+        }
+    }
+
+    public static void deleteFarm(String idFarm) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("DELETE FROM Farms WHERE id_Farm = ?")) {
+            pstmt.setString(1, idFarm);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Finca eliminada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna finca con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar Finca: " + e.getMessage());
+        }
+    }
+    
+    public static void updateFarm(String idFarm, String name, String location, String owner, String cantLotes ) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("UPDATE Farms SET name = ?, location = ?, owner = ?, cant_Lotes = ? WHERE id_Farm = ?")) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, location);
+            pstmt.setString(3, owner);
+            pstmt.setString(4, cantLotes);
+            pstmt.setString(5, idFarm);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Finca actualizada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningúna Finca con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Finca: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         //Conection.createDB();
         createTables();
-        insertUsers();
+        //insertUsers();
     }
 }
