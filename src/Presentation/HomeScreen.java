@@ -109,11 +109,6 @@ public class HomeScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReports1ActionPerformed
 
-//    public static void userLogged(boolean isDigitador, JButton btnAdmin) {
-//        // Aquí puedes realizar las acciones necesarias dependiendo del valor de isDigitador
-//        // Por ejemplo, puedes deshabilitar un botón si isDigitador es verdadero
-//        btnAdmin.setEnabled(!isDigitador);
-//    }
 
     /**
      * @param args the command line arguments

@@ -186,80 +186,6 @@ public class Conection {
         }
     }
 
-//    public static void consultarUsuarios() {
-//        String selectQuery = "SELECT * FROM Users";
-//
-//        try (Connection con = getConection(); Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(selectQuery)) {
-//
-//            // Iterar sobre el conjunto de resultados y mostrar la información de cada usuario
-//            while (rs.next()) {
-//                int id = rs.getInt("id");
-//                String username = rs.getString("username");
-//                String password = rs.getString("password");
-//
-//                System.out.println("ID: " + id + ", Username: " + username + ", Password: " + password);
-//            }
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al consultar usuarios: " + e.getMessage());
-//        }
-//
-//    }
-//    public static boolean checkUser(String username, String password) {
-//        String selectQuery = "SELECT * FROM Users WHERE username = ? AND password = ?";
-//
-//        try (Connection con = getConection(); PreparedStatement stmt = con.prepareStatement(selectQuery)) {
-//
-//            stmt.setString(1, username);
-//            stmt.setString(2, password);
-//            ResultSet rs = stmt.executeQuery();
-//
-//            return rs.next(); // Devuelve true si se encuentra al menos un usuario con el nombre de usuario y contraseña proporcionados
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al verificar usuario: " + e.getMessage());
-//            return false;
-//        }
-//    }
-    // Funciona perfecto directo en la base dedatos 
-//    public static boolean checkUser(String username, String password) {
-//        String selectQuery = "SELECT * FROM Users WHERE username = ? AND password = ?";
-//        String tipoUsuarioQuery = "SELECT type FROM Users WHERE username = ?";
-//
-//        try (Connection con = getConection(); PreparedStatement stmt = con.prepareStatement(selectQuery); PreparedStatement tipoStmt = con.prepareStatement(tipoUsuarioQuery)) {
-//
-//            // Verificar las credenciales del usuario
-//            stmt.setString(1, username);
-//            stmt.setString(2, password);
-//            ResultSet rs = stmt.executeQuery();
-//
-//            if (rs.next()) {
-//                // Usuario y contraseña válidos, ahora obtenemos el tipo de usuario
-//                tipoStmt.setString(1, username);
-//                ResultSet tipoRs = tipoStmt.executeQuery();
-//
-//                if (tipoRs.next()) {
-//                    boolean esAdministrador = tipoRs.getBoolean("type");
-//                    if (esAdministrador) {
-//                        System.out.println("El usuario es un administrador.");
-//                    } else {
-//                        System.out.println("El usuario es un digitador.");
-//                    }
-//                    return true; // Usuario y contraseña válidos
-//                } else {
-//                    System.out.println("No se encontró el tipo de usuario.");
-//                    return false;
-//                }
-//            } else {
-//                // Usuario y/o contraseña incorrectos
-//                return false;
-//            }
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al verificar usuario: " + e.getMessage());
-//            return false;
-//        }
-//    }
     public static int checkUser(String username, String password) {
         String selectQuery = "SELECT * FROM Users WHERE username = ? AND password = ?";
         String tipoUsuarioQuery = "SELECT type FROM Users WHERE username = ?";
@@ -299,21 +225,6 @@ public class Conection {
             return -3;
         }
     }
-
-//    public static void isUserTypeDigitador(String username, JButton btnAdmin) {
-//        try (Connection con = getConection(); Statement stmt = con.createStatement()) {
-//            ResultSet rs = stmt.executeQuery("SELECT type FROM Users WHERE username = '" + username + "'");
-//
-//            if (rs.next()) {
-//                int userType = rs.getInt("type");
-//                userLogged(userType == 0, btnAdmin); // Llama al método userLogged con el resultado de la verificación y la referencia al botón
-//            } else {
-//                JOptionPane.showMessageDialog(null, "No se encontró ningún usuario con el nombre de usuario especificado.");
-//            }
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al consultar el tipo de usuario: " + e.getMessage());
-//        }
-//    }
 
     public static void main(String[] args) {
         //Conection.createDB();

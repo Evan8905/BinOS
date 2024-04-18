@@ -4,7 +4,11 @@ import Data.Conection;
 import Data.Utilidades;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.lang.System.Logger;
 import javax.swing.JOptionPane;
+//
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -15,6 +19,9 @@ public class LoginScreen extends javax.swing.JFrame {
     /**
      * Creates new form LoginScreen
      */
+    // Obtener un logger para la clase actual
+    //private static final Logger logger = LogManager.getLogger(LoginScreen.class);
+
     public LoginScreen() {
         initComponents();
         // Cerrar todas las demás ventanas
