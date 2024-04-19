@@ -114,6 +114,18 @@ public class Conection {
             } else {
                 System.out.println("La tabla FarmFields ya existe.");
             }
+            if (!tableExists("Variedad", stmt)) {
+                String createOtraTablaQuery = "CREATE TABLE Variedad ("
+                        + "id INT PRIMARY KEY IDENTITY,"
+                        + "id_variedad VARCHAR(50) NOT NULL,"
+                        + "name VARCHAR(50) NOT NULL,"
+                        + "description VARCHAR(50) NOT NULL"
+                        + ")";
+                stmt.executeUpdate(createOtraTablaQuery);
+                System.out.println("Tabla variedad de fruto creada exitosamente.");
+            } else {
+                System.out.println("La tabla variedad de fruto ya existe.");
+            }
 
             // Agregar más bloques if para cada tabla adicional que desees crear
         } catch (SQLException e) {
@@ -356,6 +368,57 @@ public class Conection {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al actualizar Lote: " + e.getMessage());
+        }
+    }
+
+    /**
+     * ***********************************************Variedad de
+     * fruto*****************************************************************
+     *
+     *
+     * @param args
+     */
+    public static void insertVariedad(Fvariedad variedad) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Variedad (id_variedad, name, description) VALUES (?, ?, ?)")) {
+            pstmt.setString(1, variedad.getIdVariedad());
+            pstmt.setString(2, variedad.getName());
+            pstmt.setString(3, variedad.getDescription());
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Variedad agregada exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar Variedad: " + e.getMessage());
+        }
+    }
+
+    public static void deleteVariedad(String idVariedad) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("DELETE FROM Variedad WHERE id_variedad = ?")) {
+            pstmt.setString(1, idVariedad);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Variedad eliminada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna variedad con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el variedad: " + e.getMessage());
+        }
+    }
+
+    public static void updateVariedad(String idVariedad, String name, String description) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("UPDATE Variedad SET name = ?, description = ? WHERE id_variedad = ?")) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, description);
+            pstmt.setString(3, idVariedad);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Variedad actualizada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna Variedad con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar variedad: " + e.getMessage());
         }
     }
 

@@ -1,5 +1,13 @@
-
 package Presentation;
+
+import Data.Conection;
+import static Data.Conection.getConection;
+import Data.Fvariedad;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,6 +20,49 @@ public class JpanelVariedadF extends javax.swing.JPanel {
      */
     public JpanelVariedadF() {
         initComponents();
+    }
+
+    public void createNewVariedad() {
+
+        String idVariedad = txtID.getText();
+        String name = txtName.getText();
+        String description = txtDescription.getText();
+        Fvariedad variedad = new Fvariedad(idVariedad, name, description);
+        Conection.insertVariedad(variedad);
+        cleanUpForm();
+    }
+
+    public void cleanUpForm() {
+        // Limpiar campos de texto
+        txtID.setText("");
+        txtName.setText("");
+        txtDescription.setText("");
+        txtSearchById.setText("");
+
+    }
+
+    public void showVariedadDetails(String idVariedad) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Variedad WHERE id_variedad = ?")) {
+            pstmt.setString(1, idVariedad);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Obtener detalles desde el ResultSet
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+
+                // Establecer detalles de los campos de la interfaz
+                txtID.setText(idVariedad);
+                txtName.setText(name);
+                txtDescription.setText(description);
+
+            } else {
+               
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna variedad con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar variedad: " + e.getMessage());
+        }
     }
 
     /**
@@ -31,11 +82,11 @@ public class JpanelVariedadF extends javax.swing.JPanel {
         txtName = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        txtUserName = new javax.swing.JTextField();
+        txtDescription = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         btnRead = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        txtSearchByIdUser = new javax.swing.JTextField();
+        txtSearchById = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         btnDelete = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
@@ -80,10 +131,10 @@ public class JpanelVariedadF extends javax.swing.JPanel {
         jLabel4.setText("Descripción");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 150, -1));
 
-        txtUserName.setBackground(new java.awt.Color(16, 23, 27));
-        txtUserName.setForeground(new java.awt.Color(204, 204, 204));
-        txtUserName.setBorder(null);
-        add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 280, 20));
+        txtDescription.setBackground(new java.awt.Color(16, 23, 27));
+        txtDescription.setForeground(new java.awt.Color(204, 204, 204));
+        txtDescription.setBorder(null);
+        add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 280, 20));
 
         jSeparator3.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 280, 10));
@@ -101,10 +152,10 @@ public class JpanelVariedadF extends javax.swing.JPanel {
         jLabel8.setText("Consultar Registro por ID");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, 180, -1));
 
-        txtSearchByIdUser.setBackground(new java.awt.Color(16, 23, 27));
-        txtSearchByIdUser.setForeground(new java.awt.Color(204, 204, 204));
-        txtSearchByIdUser.setBorder(null);
-        add(txtSearchByIdUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
+        txtSearchById.setBackground(new java.awt.Color(16, 23, 27));
+        txtSearchById.setForeground(new java.awt.Color(204, 204, 204));
+        txtSearchById.setBorder(null);
+        add(txtSearchById, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
 
         jSeparator5.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 280, 10));
@@ -135,19 +186,30 @@ public class JpanelVariedadF extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadActionPerformed
-
+        String id = txtSearchById.getText();
+        showVariedadDetails(id);
+        btnSave.setEnabled(false);
     }//GEN-LAST:event_btnReadActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
+        String id = txtSearchById.getText();
+        Conection.deleteVariedad(id);
+        cleanUpForm();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+        createNewVariedad();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-
+        String id = txtID.getText();
+        String name = txtName.getText();
+        String description = txtDescription.getText();
+        
+        Conection conection = new Conection();
+        conection.updateVariedad(id, name, description);
+        cleanUpForm();
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 
@@ -165,9 +227,9 @@ public class JpanelVariedadF extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtSearchByIdUser;
-    private javax.swing.JTextField txtUserName;
+    private javax.swing.JTextField txtSearchById;
     // End of variables declaration//GEN-END:variables
 }
