@@ -2,7 +2,6 @@ package Presentation;
 
 import Data.Utilidades;
 
-
 /**
  *
  * @author eefre
@@ -35,6 +34,7 @@ public class HomeScreen extends javax.swing.JFrame {
         lblSignOut = new javax.swing.JLabel();
         btnAdmin = new javax.swing.JButton();
         btnReports1 = new javax.swing.JButton();
+        lblCopyRight = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -43,8 +43,8 @@ public class HomeScreen extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Bienvenido");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, -1, -1));
+        jLabel2.setText("Hola, seleccione un modulo");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 130, -1, -1));
 
         lblSignOut.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
         lblSignOut.setForeground(new java.awt.Color(255, 255, 255));
@@ -69,7 +69,7 @@ public class HomeScreen extends javax.swing.JFrame {
                 btnAdminActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 280, 190));
+        getContentPane().add(btnAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 280, 190));
 
         btnReports1.setBackground(new java.awt.Color(16, 16, 16));
         btnReports1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -82,7 +82,12 @@ public class HomeScreen extends javax.swing.JFrame {
                 btnReports1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnReports1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 280, 190));
+        getContentPane().add(btnReports1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 260, 280, 190));
+
+        lblCopyRight.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
+        lblCopyRight.setForeground(new java.awt.Color(255, 255, 255));
+        lblCopyRight.setText("Power by Evan | 2024");
+        getContentPane().add(lblCopyRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 640, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBG.png"))); // NOI18N
         jLabel1.setText("lblBG");
@@ -106,9 +111,10 @@ public class HomeScreen extends javax.swing.JFrame {
 
 
     private void btnReports1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReports1ActionPerformed
-        // TODO add your handling code here:
+        ReportsScreen scr = new ReportsScreen();
+        scr.setLocationRelativeTo(null);
+        scr.setVisible(true);
     }//GEN-LAST:event_btnReports1ActionPerformed
-
 
     /**
      * @param args the command line arguments
@@ -150,6 +156,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private javax.swing.JButton btnReports1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblCopyRight;
     private javax.swing.JLabel lblSignOut;
     // End of variables declaration//GEN-END:variables
 }

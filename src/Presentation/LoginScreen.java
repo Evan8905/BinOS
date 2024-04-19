@@ -262,23 +262,7 @@ public class LoginScreen extends javax.swing.JFrame {
     private void btnEyeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEyeMouseReleased
         txtPassword.setEchoChar('*');
     }//GEN-LAST:event_btnEyeMouseReleased
-//    private void validateLogin() {
-//        // Obtener los datos del formulario
-//        String user = txtUserName.getText();
-//        String password = txtPassword.getText();
-//       
-//        // Verificar las credenciales del usuario
-//        if (Conection.checkUser(user, password)) {
-//            // Las credenciales son correctas, permitir el acceso al sistema
-//            JOptionPane.showMessageDialog(null, "Acceso concedido.");
-//            HomeScreenDigitador scr = new HomeScreenDigitador();
-//            scr.setLocationRelativeTo(null);
-//            scr.setVisible(true);
-//        } else {
-//            // Las credenciales son incorrectas
-//            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
-//        }
-//    }
+
 
     private void validateLogin() {
         // Obtener los datos del formulario

@@ -1,5 +1,16 @@
-
 package Presentation;
+
+import Data.Conection;
+import static Data.Conection.getConection;
+import Data.Proveedor;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -10,8 +21,93 @@ public class JpanelProveedor extends javax.swing.JPanel {
     /**
      * Creates new form JpanelProveedor
      */
+    private ArrayList<String> cosechaList = new ArrayList<>();
+
     public JpanelProveedor() {
         initComponents();
+        getIDFromDB();
+
+    }
+
+    private List<String> getCosechaFromDatabase() {
+        List<String> cosechaIDs = new ArrayList<>();
+
+        String selectQuery = "SELECT id_cosecha FROM Cosecha";
+
+        try (Connection con = getConection(); PreparedStatement stmt = con.prepareStatement(selectQuery)) {
+            // Ejecutar la consulta
+            ResultSet resultSet = stmt.executeQuery();
+
+            // Iterar sobre los resultados y agregar solo el ID a la lista
+            while (resultSet.next()) {
+                String idCosecha = resultSet.getString("id_cosecha");
+                cosechaIDs.add(idCosecha);
+            }
+
+            System.out.println("ID de cosecha cargados exitosamente desde la base de datos!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al cargar los ID de cosecha desde la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return cosechaIDs;
+    }
+
+    private void getIDFromDB() {
+        List<String> cosechaIDs = getCosechaFromDatabase();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(cosechaIDs.toArray(new String[0]));
+        cmbIDCosecha.setModel(model);
+    }
+
+    public void createNewProveedor() {
+
+        String id = txtID.getText();
+        String name = txtName.getText();
+        String address = txtAddress.getText();
+        String phone = txtPhone.getText();
+        String idSelected = (String) cmbIDCosecha.getSelectedItem();
+
+        Proveedor proveedor = new Proveedor(id, name, address, phone, idSelected);
+        Conection.insertProveedor(proveedor);
+        cleanUpForm();
+    }
+
+    public void cleanUpForm() {
+        // Limpiar campos de texto
+        txtID.setText("");
+        txtName.setText("");
+        txtAddress.setText("");
+        txtPhone.setText("");
+        //cmbType.setAction(null);
+        txtSearchById.setText("");
+    }
+
+    public void showProveedorDetails(String idProveedor) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Proveedor WHERE id_Proveedor = ?")) {
+            pstmt.setString(1, idProveedor);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Obtener detalles desde el ResultSet
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                String id_De_Cosecha = rs.getString("id_De_Cosecha");
+
+                // Establecer detalles en la interfaz
+                txtID.setText(idProveedor);
+                txtName.setText(name);
+                txtAddress.setText(address);
+                txtPhone.setText(phone);
+                cmbIDCosecha.setSelectedItem(id_De_Cosecha);
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "No se encontró ningún Proveedor con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar Proveedor: " + e.getMessage());
+        }
     }
 
     /**
@@ -31,21 +127,20 @@ public class JpanelProveedor extends javax.swing.JPanel {
         txtName = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        txtUserName = new javax.swing.JTextField();
+        txtAddress = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         btnDelete = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnRead = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        txtSearchByIdUser = new javax.swing.JTextField();
+        txtSearchById = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
-        txtPassword1 = new javax.swing.JTextField();
-        jSeparator6 = new javax.swing.JSeparator();
+        cmbIDCosecha = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(16, 23, 27));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -86,10 +181,10 @@ public class JpanelProveedor extends javax.swing.JPanel {
         jLabel4.setText("Dirección");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 150, -1));
 
-        txtUserName.setBackground(new java.awt.Color(16, 23, 27));
-        txtUserName.setForeground(new java.awt.Color(204, 204, 204));
-        txtUserName.setBorder(null);
-        add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 280, 20));
+        txtAddress.setBackground(new java.awt.Color(16, 23, 27));
+        txtAddress.setForeground(new java.awt.Color(204, 204, 204));
+        txtAddress.setBorder(null);
+        add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 280, 20));
 
         jSeparator3.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 280, 10));
@@ -99,10 +194,10 @@ public class JpanelProveedor extends javax.swing.JPanel {
         jLabel5.setText("Teléfono");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 110, -1));
 
-        txtPassword.setBackground(new java.awt.Color(16, 23, 27));
-        txtPassword.setForeground(new java.awt.Color(204, 204, 204));
-        txtPassword.setBorder(null);
-        add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 280, 20));
+        txtPhone.setBackground(new java.awt.Color(16, 23, 27));
+        txtPhone.setForeground(new java.awt.Color(204, 204, 204));
+        txtPhone.setBorder(null);
+        add(txtPhone, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 280, 20));
 
         jSeparator4.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 280, 10));
@@ -144,42 +239,49 @@ public class JpanelProveedor extends javax.swing.JPanel {
         jLabel8.setText("Consultar Registro por ID");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, 180, -1));
 
-        txtSearchByIdUser.setBackground(new java.awt.Color(16, 23, 27));
-        txtSearchByIdUser.setForeground(new java.awt.Color(204, 204, 204));
-        txtSearchByIdUser.setBorder(null);
-        add(txtSearchByIdUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
+        txtSearchById.setBackground(new java.awt.Color(16, 23, 27));
+        txtSearchById.setForeground(new java.awt.Color(204, 204, 204));
+        txtSearchById.setBorder(null);
+        add(txtSearchById, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
 
         jSeparator5.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 280, 10));
 
         jLabel6.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 142, 73));
-        jLabel6.setText("Documentos de cosecha");
+        jLabel6.setText("ID Cosecha");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 350, 220, -1));
 
-        txtPassword1.setBackground(new java.awt.Color(16, 23, 27));
-        txtPassword1.setForeground(new java.awt.Color(204, 204, 204));
-        txtPassword1.setBorder(null);
-        add(txtPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 280, 20));
-
-        jSeparator6.setBackground(new java.awt.Color(204, 204, 204));
-        add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 280, 10));
+        add(cmbIDCosecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, 280, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
+        String id = txtSearchById.getText();
+        Conection.deleteProveedor(id);
+        cleanUpForm();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+        createNewProveedor();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadActionPerformed
-
+        String id = txtSearchById.getText();
+        showProveedorDetails(id);
+        btnSave.setEnabled(false);
     }//GEN-LAST:event_btnReadActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        String id = txtID.getText();
+        String name = txtName.getText();
+        String address = txtAddress.getText();
+        String phone = txtPhone.getText();
+        String idSelected = (String) cmbIDCosecha.getSelectedItem();
 
+        Conection conection = new Conection();
+        conection.updateProveedor(id, name, address, phone, idSelected);
+        cleanUpForm();
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 
@@ -188,6 +290,7 @@ public class JpanelProveedor extends javax.swing.JPanel {
     private javax.swing.JButton btnRead;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbIDCosecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -200,12 +303,10 @@ public class JpanelProveedor extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtPassword1;
-    private javax.swing.JTextField txtSearchByIdUser;
-    private javax.swing.JTextField txtUserName;
+    private javax.swing.JTextField txtPhone;
+    private javax.swing.JTextField txtSearchById;
     // End of variables declaration//GEN-END:variables
 }

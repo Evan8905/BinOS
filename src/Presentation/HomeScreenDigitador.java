@@ -32,9 +32,11 @@ public class HomeScreenDigitador extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblSignOut = new javax.swing.JLabel();
         btnDigitador = new javax.swing.JButton();
+        lblCopyRight = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
@@ -57,7 +59,7 @@ public class HomeScreenDigitador extends javax.swing.JFrame {
         btnDigitador.setBackground(new java.awt.Color(16, 16, 16));
         btnDigitador.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnDigitador.setForeground(new java.awt.Color(153, 153, 255));
-        btnDigitador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adminIcon.png"))); // NOI18N
+        btnDigitador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/digitador.png"))); // NOI18N
         btnDigitador.setText("Digitador");
         btnDigitador.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDigitador.addActionListener(new java.awt.event.ActionListener() {
@@ -67,9 +69,14 @@ public class HomeScreenDigitador extends javax.swing.JFrame {
         });
         getContentPane().add(btnDigitador, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 260, 280, 190));
 
+        lblCopyRight.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
+        lblCopyRight.setForeground(new java.awt.Color(255, 255, 255));
+        lblCopyRight.setText("Power by Evan | 2024");
+        getContentPane().add(lblCopyRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 670, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBG.png"))); // NOI18N
         jLabel1.setText("lblBG");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1460, 763));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1460, 770));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -82,7 +89,7 @@ public class HomeScreenDigitador extends javax.swing.JFrame {
 
     private void btnDigitadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDigitadorActionPerformed
 
-        AdminScreen scr = new AdminScreen();
+        DigitadorScreen scr = new DigitadorScreen();
         scr.setLocationRelativeTo(null);
         scr.setVisible(true);
     }//GEN-LAST:event_btnDigitadorActionPerformed
@@ -126,6 +133,7 @@ public class HomeScreenDigitador extends javax.swing.JFrame {
     private javax.swing.JButton btnDigitador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblCopyRight;
     private javax.swing.JLabel lblSignOut;
     // End of variables declaration//GEN-END:variables
 }

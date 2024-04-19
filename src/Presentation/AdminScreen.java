@@ -51,6 +51,7 @@ public class AdminScreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblSignOut = new javax.swing.JLabel();
         bodyPanel = new javax.swing.JPanel();
+        lblWelcomeIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 51));
@@ -60,7 +61,7 @@ public class AdminScreen extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelMain.setBackground(new java.awt.Color(255, 255, 0));
-        panelMain.setForeground(new java.awt.Color(255, 255, 255));
+        panelMain.setForeground(new java.awt.Color(16, 23, 27));
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
         panelMain.setLayout(panelMainLayout);
@@ -122,7 +123,7 @@ public class AdminScreen extends javax.swing.JFrame {
         btnLotes.setBackground(new java.awt.Color(0, 142, 73));
         btnLotes.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
         btnLotes.setForeground(new java.awt.Color(51, 51, 51));
-        btnLotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Fincas.png"))); // NOI18N
+        btnLotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/land.png"))); // NOI18N
         btnLotes.setText("         Lotes                             ");
         btnLotes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLotes.addActionListener(new java.awt.event.ActionListener() {
@@ -279,17 +280,25 @@ public class AdminScreen extends javax.swing.JFrame {
         getContentPane().add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, -1, 80));
 
         bodyPanel.setBackground(new java.awt.Color(16, 23, 27));
-        bodyPanel.setForeground(new java.awt.Color(255, 255, 255));
+        bodyPanel.setForeground(new java.awt.Color(16, 23, 27));
+
+        lblWelcomeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adminIcon.png"))); // NOI18N
 
         javax.swing.GroupLayout bodyPanelLayout = new javax.swing.GroupLayout(bodyPanel);
         bodyPanel.setLayout(bodyPanelLayout);
         bodyPanelLayout.setHorizontalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1130, Short.MAX_VALUE)
+            .addGroup(bodyPanelLayout.createSequentialGroup()
+                .addGap(481, 481, 481)
+                .addComponent(lblWelcomeIcon)
+                .addContainerGap(515, Short.MAX_VALUE))
         );
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 690, Short.MAX_VALUE)
+            .addGroup(bodyPanelLayout.createSequentialGroup()
+                .addGap(256, 256, 256)
+                .addComponent(lblWelcomeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(280, Short.MAX_VALUE))
         );
 
         getContentPane().add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 1130, 690));
@@ -436,6 +445,7 @@ public class AdminScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblSignOut;
     private javax.swing.JLabel lblWelcome;
+    private javax.swing.JLabel lblWelcomeIcon;
     private javax.swing.JPanel leftSidePanel;
     private javax.swing.JPanel panelMain;
     // End of variables declaration//GEN-END:variables

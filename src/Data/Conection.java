@@ -74,18 +74,6 @@ public class Conection {
                 System.out.println("La tabla de usuarios ya existe.");
             }
 
-            // Verificar si otra tabla existe y crearla si es necesario
-            if (!tableExists("Productos", stmt)) {
-                String createOtraTablaQuery = "CREATE TABLE Productos ("
-                        + "id INT PRIMARY KEY IDENTITY,"
-                        + "nombre VARCHAR(50),"
-                        + "fecha VARCHAR(50)"
-                        + ")";
-                stmt.executeUpdate(createOtraTablaQuery);
-                System.out.println("Tabla Productos creada exitosamente.");
-            } else {
-                System.out.println("La tabla Productos ya existe.");
-            }
             if (!tableExists("Farms", stmt)) {
                 String createOtraTablaQuery = "CREATE TABLE Farms ("
                         + "id INT PRIMARY KEY IDENTITY,"
@@ -137,6 +125,22 @@ public class Conection {
                 System.out.println("Tabla Cosecha creada exitosamente.");
             } else {
                 System.out.println("La tabla Cosecha ya existe.");
+            }
+
+            if (!tableExists("Proveedor", stmt)) {
+                String createOtraTablaQuery = "CREATE TABLE Proveedor ("
+                        + "id INT PRIMARY KEY IDENTITY,"
+                        + "id_Proveedor VARCHAR(50) NOT NULL,"
+                        + "name VARCHAR(50) NOT NULL,"
+                        + "address VARCHAR(50) NOT NULL,"
+                        + "phone VARCHAR(50) NOT NULL,"
+                        + "id_De_Cosecha VARCHAR(50) NOT NULL,"
+                        + "FOREIGN KEY (id_De_Cosecha) REFERENCES Cosecha(id_cosecha)"
+                        + ")";
+                stmt.executeUpdate(createOtraTablaQuery);
+                System.out.println("Tabla Proveedor creada exitosamente.");
+            } else {
+                System.out.println("La tabla Proveedor ya existe.");
             }
 
             // Agregar más bloques if para cada tabla adicional que desees crear
@@ -434,7 +438,7 @@ public class Conection {
         }
     }
 
-    // * ***********************************************LOTES*****************************************************************
+    // * ***********************************************Cosecha*****************************************************************
     public static void insertCosecha(Cosecha cosecha) {
         try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Cosecha (id_cosecha, type, description) VALUES (?, ?, ?)")) {
             pstmt.setString(1, cosecha.getIdCosecha());
@@ -476,6 +480,54 @@ public class Conection {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al actualizar Cosecha: " + e.getMessage());
+        }
+    }
+
+    // * ***********************************************Proveedor*****************************************************************
+    public static void insertProveedor(Proveedor proveedor) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Proveedor (id_Proveedor, name, address, phone, id_De_Cosecha) VALUES (?, ?, ?, ?, ?)")) {
+            pstmt.setString(1, proveedor.getIdProveedor());
+            pstmt.setString(2, proveedor.getName());
+            pstmt.setString(3, proveedor.getAddress());
+            pstmt.setString(4, proveedor.getPhone());
+            pstmt.setString(5, proveedor.getIdCosecha());
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Proveedor agregado exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar Proveedor: " + e.getMessage());
+        }
+    }
+
+    public static void deleteProveedor(String idProveedor) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("DELETE FROM Proveedor WHERE id_Proveedor = ?")) {
+            pstmt.setString(1, idProveedor);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Proveedor eliminado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningun Proveedor con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el Proveedor: " + e.getMessage());
+        }
+    }
+
+    public static void updateProveedor(String idProveedor, String name, String address, String phone, String idCosecha) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("UPDATE Proveedor SET name = ?, address = ?, phone = ?, id_De_Cosecha = ? WHERE id_Proveedor = ?")) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, address);
+            pstmt.setString(3, phone);
+            pstmt.setString(4, idCosecha);
+            pstmt.setString(5, idProveedor);
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Proveedor actualizado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ningun Proveedor con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Proveedor: " + e.getMessage());
         }
     }
 
