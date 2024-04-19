@@ -1,5 +1,13 @@
-
 package Presentation;
+
+import Data.Conection;
+import static Data.Conection.getConection;
+import Data.Cosecha;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,6 +20,49 @@ public class JpanelCosecha extends javax.swing.JPanel {
      */
     public JpanelCosecha() {
         initComponents();
+    }
+
+    public void createNewCosecha() {
+
+        String id = txtID.getText();
+        String typeSelected = (String) cmbType.getSelectedItem();
+        String description = txtDescription.getText();
+
+        Cosecha cosecha = new Cosecha(id, typeSelected, description);
+        Conection.insertCosecha(cosecha);
+        cleanUpForm();
+    }
+
+    public void cleanUpForm() {
+        // Limpiar campos de texto
+        txtID.setText("");
+        //cmbType.setAction(null);
+        txtDescription.setText("");
+        txtSearchById.setText("");
+    }
+
+    public void showCosechaDetails(String idCosecha) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Cosecha WHERE id_cosecha = ?")) {
+            pstmt.setString(1, idCosecha);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Obtener detalles desde el ResultSet
+                String type = rs.getString("type");
+                String description = rs.getString("description");
+
+                // Establecer detalles en la interfaz
+                txtID.setText(idCosecha);
+                cmbType.setSelectedItem(type);
+                txtDescription.setText(description);
+
+            } else {
+
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna Cosecha con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar Cosecha: " + e.getMessage());
+        }
     }
 
     /**
@@ -29,16 +80,16 @@ public class JpanelCosecha extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtUserName = new javax.swing.JTextField();
+        txtDescription = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         btnRead = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        txtSearchByIdUser = new javax.swing.JTextField();
+        txtSearchById = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         btnDelete = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbType = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(16, 23, 27));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,10 +122,10 @@ public class JpanelCosecha extends javax.swing.JPanel {
         jLabel4.setText("Descripción");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 220, -1));
 
-        txtUserName.setBackground(new java.awt.Color(16, 23, 27));
-        txtUserName.setForeground(new java.awt.Color(204, 204, 204));
-        txtUserName.setBorder(null);
-        add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 280, 20));
+        txtDescription.setBackground(new java.awt.Color(16, 23, 27));
+        txtDescription.setForeground(new java.awt.Color(204, 204, 204));
+        txtDescription.setBorder(null);
+        add(txtDescription, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 280, 20));
 
         jSeparator3.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 280, 10));
@@ -92,10 +143,10 @@ public class JpanelCosecha extends javax.swing.JPanel {
         jLabel8.setText("Consultar Registro por ID");
         add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 100, 180, -1));
 
-        txtSearchByIdUser.setBackground(new java.awt.Color(16, 23, 27));
-        txtSearchByIdUser.setForeground(new java.awt.Color(204, 204, 204));
-        txtSearchByIdUser.setBorder(null);
-        add(txtSearchByIdUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
+        txtSearchById.setBackground(new java.awt.Color(16, 23, 27));
+        txtSearchById.setForeground(new java.awt.Color(204, 204, 204));
+        txtSearchById.setBorder(null);
+        add(txtSearchById, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 280, 20));
 
         jSeparator5.setBackground(new java.awt.Color(204, 204, 204));
         add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 280, 10));
@@ -124,24 +175,36 @@ public class JpanelCosecha extends javax.swing.JPanel {
         });
         add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 340, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primera", "Segunda", "Tercera" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 140, -1));
+        cmbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primera", "Segunda", "Tercera", "Otra" }));
+        add(cmbType, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 140, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadActionPerformed
-// Deshabilitar el botón btnSave par aque no pueda hacer otro registro igual la base de datos no se lo va permitir
+        String id = txtSearchById.getText();
+        showCosechaDetails(id);
+        btnSave.setEnabled(false);
+
     }//GEN-LAST:event_btnReadActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
+        String id = txtSearchById.getText();
+        Conection.deleteCosecha(id);
+        cleanUpForm();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       
+        createNewCosecha();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-
+        String id = txtID.getText();
+        String typeSelected = (String) cmbType.getSelectedItem();
+        String description = txtDescription.getText();
+        
+        Conection conection = new Conection();
+        conection.updateCosecha(id, typeSelected, description);
+        cleanUpForm();
+        btnSave.setEnabled(true);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 
@@ -150,7 +213,7 @@ public class JpanelCosecha extends javax.swing.JPanel {
     private javax.swing.JButton btnRead;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -159,8 +222,8 @@ public class JpanelCosecha extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JTextField txtDescription;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtSearchByIdUser;
-    private javax.swing.JTextField txtUserName;
+    private javax.swing.JTextField txtSearchById;
     // End of variables declaration//GEN-END:variables
 }

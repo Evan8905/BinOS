@@ -126,6 +126,18 @@ public class Conection {
             } else {
                 System.out.println("La tabla variedad de fruto ya existe.");
             }
+            if (!tableExists("Cosecha", stmt)) {
+                String createOtraTablaQuery = "CREATE TABLE Cosecha ("
+                        + "id INT PRIMARY KEY IDENTITY,"
+                        + "id_cosecha VARCHAR(50) UNIQUE NOT NULL,"
+                        + "type VARCHAR(50) NOT NULL,"
+                        + "description VARCHAR(50) NOT NULL"
+                        + ")";
+                stmt.executeUpdate(createOtraTablaQuery);
+                System.out.println("Tabla Cosecha creada exitosamente.");
+            } else {
+                System.out.println("La tabla Cosecha ya existe.");
+            }
 
             // Agregar más bloques if para cada tabla adicional que desees crear
         } catch (SQLException e) {
@@ -419,6 +431,51 @@ public class Conection {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al actualizar variedad: " + e.getMessage());
+        }
+    }
+
+    // * ***********************************************LOTES*****************************************************************
+    public static void insertCosecha(Cosecha cosecha) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Cosecha (id_cosecha, type, description) VALUES (?, ?, ?)")) {
+            pstmt.setString(1, cosecha.getIdCosecha());
+            pstmt.setString(2, cosecha.getTipo());
+            pstmt.setString(3, cosecha.getDescription());
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Cosecha agregada exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar Cosecha: " + e.getMessage());
+        }
+    }
+
+    public static void deleteCosecha(String idCosecha) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("DELETE FROM Cosecha WHERE id_cosecha = ?")) {
+            pstmt.setString(1, idCosecha);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Cosecha eliminada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna Cosecha con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el Cosecha: " + e.getMessage());
+        }
+    }
+
+    public static void updateCosecha(String idCosecha, String type, String description) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("UPDATE Cosecha SET type = ?, description = ? WHERE id_cosecha = ?")) {
+            pstmt.setString(1, type);
+            pstmt.setString(2, description);
+            pstmt.setString(3, idCosecha);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Cosecha actualizada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna Cosecha con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar Cosecha: " + e.getMessage());
         }
     }
 
