@@ -109,7 +109,7 @@ public class JpanelFarmFields extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(244, 67, 54));
         jLabel1.setText("Lotes");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 70, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 70, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 142, 73));

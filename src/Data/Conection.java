@@ -7,6 +7,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 
 public class Conection {
 
@@ -141,6 +142,32 @@ public class Conection {
                 System.out.println("Tabla Proveedor creada exitosamente.");
             } else {
                 System.out.println("La tabla Proveedor ya existe.");
+            }
+            if (!tableExists("Boleta", stmt)) {
+                String createBoletaTableQuery = "CREATE TABLE Boleta ("
+                        + "id INT PRIMARY KEY IDENTITY,"
+                        + "Nboleta VARCHAR(50) NOT NULL,"
+                        + "Nbin1 VARCHAR(50) NOT NULL,"
+                        + "idFinca1 VARCHAR(50) NOT NULL,"
+                        + "idLote1 VARCHAR(50) NOT NULL,"
+                        + "Cantidad1 VARCHAR(50) NOT NULL,"
+                        + "Nbin2 VARCHAR(50),"
+                        + "idFinca2 VARCHAR(50),"
+                        + "idLote2 VARCHAR(50),"
+                        + "Cantidad2 VARCHAR(50),"
+                        + "placaCamion VARCHAR(50) NOT NULL,"
+                        + "fecha DATE NOT NULL,"
+                        + "horaCarga VARCHAR(50) NOT NULL,"
+                        + "horaDescarga VARCHAR(50) NOT NULL,"
+                        + "idCosecha VARCHAR(50) NOT NULL,"
+                        + "idFruto VARCHAR(50),"
+                        + "Cuadrilla VARCHAR(50),"
+                        + "Observaciones VARCHAR(100)"
+                        + ")";
+                stmt.executeUpdate(createBoletaTableQuery);
+                System.out.println("Tabla Boleta creada exitosamente.");
+            } else {
+                System.out.println("La tabla Boleta ya existe.");
             }
 
             // Agregar más bloques if para cada tabla adicional que desees crear
@@ -528,6 +555,52 @@ public class Conection {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al actualizar Proveedor: " + e.getMessage());
+        }
+    }
+
+    public static void insertBoleta(Boleta boleta) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("INSERT INTO Boleta (Nboleta, Nbin1, idFinca1, idLote1, Cantidad1, Nbin2, idFinca2, idLote2, Cantidad2, placaCamion, fecha, horaCarga, horaDescarga, idCosecha, idFruto, Cuadrilla, Observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+            pstmt.setString(1, boleta.getNboleta());
+            pstmt.setString(2, boleta.getNbin1());
+            pstmt.setString(3, boleta.getIdFinca1());
+            pstmt.setString(4, boleta.getIdLote1());
+            pstmt.setString(5, boleta.getCantidad1());
+            pstmt.setString(6, boleta.getNbin2());
+            pstmt.setString(7, boleta.getIdFinca2());
+            pstmt.setString(8, boleta.getIdLote2());
+            pstmt.setString(9, boleta.getCantidad2());
+            pstmt.setString(10, boleta.getPlacaCamion());
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaString = dateFormat.format(boleta.getDate());
+
+            pstmt.setString(11, fechaString); // Fecha como String
+            pstmt.setString(12, boleta.getHoraCarga());
+            pstmt.setString(13, boleta.getHoraDescarga());
+            pstmt.setString(14, boleta.getIdCosecha());
+            pstmt.setString(15, boleta.getIdFruto());
+            pstmt.setString(16, boleta.getCuadrilla());
+            pstmt.setString(17, boleta.getObservaciones());
+
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Boleta agregada exitosamente.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar Boleta: " + e.getMessage());
+        }
+    }
+    
+        public static void deleteBoleta(String idBoleta) {
+        try (Connection con = getConection(); PreparedStatement pstmt = con.prepareStatement("DELETE FROM Boleta WHERE Nboleta = ?")) {
+            pstmt.setString(1, idBoleta);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Boleta eliminada exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna Boleta con el ID especificado.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el Boleta: " + e.getMessage());
         }
     }
 

@@ -2,6 +2,7 @@
 package Presentation;
 
 import Data.Utilidades;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -158,14 +159,14 @@ public class DigitadorScreen extends javax.swing.JFrame {
                 .addComponent(btnProveedores)
                 .addGap(18, 18, 18)
                 .addComponent(btnFincas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(lblGoback)
                 .addGap(35, 35, 35)
                 .addComponent(lblCopyRight)
                 .addGap(172, 172, 172))
         );
 
-        getContentPane().add(leftSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 760));
+        getContentPane().add(leftSidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 730));
 
         headerPanel.setBackground(new java.awt.Color(0, 142, 73));
         headerPanel.setForeground(new java.awt.Color(255, 255, 255));
@@ -190,26 +191,23 @@ public class DigitadorScreen extends javax.swing.JFrame {
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addContainerGap(424, Short.MAX_VALUE)
+                .addContainerGap(397, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(343, 343, 343)
+                .addGap(323, 323, 323)
                 .addComponent(lblSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addGap(34, 34, 34))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(headerPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(headerPanelLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel1)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblSignOut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        getContentPane().add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, 80));
+        getContentPane().add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 1080, 80));
 
         bodyPanel.setBackground(new java.awt.Color(16, 23, 27));
         bodyPanel.setForeground(new java.awt.Color(255, 255, 255));
@@ -223,30 +221,36 @@ public class DigitadorScreen extends javax.swing.JFrame {
             .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addGap(458, 458, 458)
                 .addComponent(lblWelcomeIcon)
-                .addContainerGap(517, Short.MAX_VALUE))
+                .addContainerGap(487, Short.MAX_VALUE))
         );
         bodyPanelLayout.setVerticalGroup(
             bodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bodyPanelLayout.createSequentialGroup()
                 .addGap(218, 218, 218)
                 .addComponent(lblWelcomeIcon)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
-        getContentPane().add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 1110, 680));
+        getContentPane().add(bodyPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 1080, 650));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogoMouseClicked
 
-        HomeScreen scr = new HomeScreen();
+        HomeScreenDigitador scr = new HomeScreenDigitador();
         scr.setLocationRelativeTo(null);
         scr.setVisible(true);
     }//GEN-LAST:event_lblLogoMouseClicked
 
     private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
-
+        JpanelBoleta panel = new JpanelBoleta();
+        panel.setSize(1130, 660);
+        panel.setLocation(0, 0);
+        bodyPanel.removeAll();
+        bodyPanel.add(panel, BorderLayout.CENTER);
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
     }//GEN-LAST:event_btnUsersActionPerformed
 
     private void btnUsersKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnUsersKeyPressed
